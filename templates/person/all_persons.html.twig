@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block title %}Liste des Personnes{% endblock %}
+
+
+{% block body %}
+
+
+
+<h1>Liste des Personnes</h1>
+<table class="table table-striped">
+
+<tr>
+<TH>Nom </TH> <TH>Prénom </TH>
+<TH> Ville</TH><TH> Voir</TH>
+<TH> Edit</TH><TH> Delete</TH>
+</tr>
+{% for person in persons %}
+
+<tr>
+<td>{{ person.getNom() }}</td>
+<td>{{ person.getPrenom() }}</td>
+<td>{{ person.getVille() }}</td>
+<td><a href="{{ path('person_show', {'id': person.id}) }}">show</a></td>
+<td><a href="{{ path('person_edit', {'id': person.id}) }}">edit</a></td>
+<td><a href="{{ path('person_delete', {'id': person.id}) }}">delete</a></td>
+</tr>
+
+{% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block title %}Liste des Personnes{% endblock %}
+
+
+{% block body %}
+
+
+
+<h1>Liste des Personnes</h1>
+<table class="table table-striped">
+
+<tr>
+<TH>Nom </TH> <TH>Prénom </TH>
+<TH> Ville</TH><TH> age</TH>
+<TH> Date naissance</TH>
+</tr>
+
+
+<tr>
+<td>{{ person.getNom() }}</td>
+<td>{{ person.getPrenom() }}</td>
+<td>{{ person.getVille() }}</td>
+<td>{{ person.getAge() }}</td>
+<td>{{ person.getDateAnniversaire()|date('d-m-Y') }}</td>
+</tr>
+
+
+</table>
+{% endblock %}

@@ -1,0 +1,24 @@
+
+{% extends 'base.html.twig' %}
+{% block title %}Liste des Personnes{% endblock %}
+
+
+{% block body %}
+
+
+<h1> Editer une personne </h1>
+<table border=1 width=75%>
+<tr>
+<TH>Nom </TH> <TH>Prénom </TH>
+<TH> Age</TH> <TH>date de Naissance </TH>
+</tr>
+<tr> <td><input type="text" value ={{personne.getNom() }} ></td>
+<td><input type="text" value = {{personne.getPrenom()}}> </td>
+<td> <input type="text" value ={{personne.getAge()}}> </td>
+<td><input type="text" value = {{personne.getDateAnniversaire()|date('d-m-Y')}}> </td>
+</tr>
+</table>
+
+{# <a> <button type=button href ="{{ }}">Envoyer</button></a> #}
+
+{% endblock %}

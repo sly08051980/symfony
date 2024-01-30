@@ -1,0 +1,21 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Bonjour Monsieur {{name}}</h1>
+
+{% apply upper %}
+{{name}}
+{% endapply %}
+<br>
+
+{% set sizes = [34, 36, 38, 40, 42] %}
+{{ sizes|join(', ') }}
+<br>
+{{ sizes|filter(v => v > 38)|join(', ') }}
+
+<br>
+
+{{"today"|date("m/d/Y")}}
+
+{% endblock %}
