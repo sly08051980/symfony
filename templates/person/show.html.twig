@@ -3,6 +3,15 @@
 
 {% block body %}
     <h1>Editer une personne</h1>
+
+    {{ form_start(form) }}
+
+     {{ form_end(form) }}
+
+
+
+{# 
+
     {% if person is defined and person is not null %}
         <table border=1 width=75%>
             <tr>
@@ -18,5 +27,5 @@
         <a href="{{ path('app_all_persons') }}">Retour à la liste des personnes</a>
     {% else %}
         <p>Personne non trouvée</p>
-    {% endif %}
+    {% endif %} #}
 {% endblock %}
