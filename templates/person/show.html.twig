@@ -1,29 +1,22 @@
 {% extends 'base.html.twig' %}
-{% block title %}Liste des Personnes{% endblock %}
-
+{% block title %}Editer une personne{% endblock %}
 
 {% block body %}
-
-
-
-<h1>Liste des Personnes</h1>
-<table class="table table-striped">
-
-<tr>
-<TH>Nom </TH> <TH>Prénom </TH>
-<TH> Ville</TH><TH> age</TH>
-<TH> Date naissance</TH>
-</tr>
-
-
-<tr>
-<td>{{ person.getNom() }}</td>
-<td>{{ person.getPrenom() }}</td>
-<td>{{ person.getVille() }}</td>
-<td>{{ person.getAge() }}</td>
-<td>{{ person.getDateAnniversaire()|date('d-m-Y') }}</td>
-</tr>
-
-
-</table>
+    <h1>Editer une personne</h1>
+    {% if person is defined and person is not null %}
+        <table border=1 width=75%>
+            <tr>
+                <th>Nom</th> <th>Prénom</th> <th>Age</th> <th>Date de Naissance</th>
+            </tr>
+            <tr>
+                <td><input type="text" value="{{ person.getNom() }}"></td>
+                <td><input type="text" value="{{ person.getPrenom() }}"></td>
+                <td><input type="text" value="{{ person.getAge() }}"></td>
+                <td><input type="text" value="{{ person.getDateAnniversaire()|date('d-m-Y') }}"></td>
+            </tr>
+        </table>
+        <a href="{{ path('app_all_persons') }}">Retour à la liste des personnes</a>
+    {% else %}
+        <p>Personne non trouvée</p>
+    {% endif %}
 {% endblock %}

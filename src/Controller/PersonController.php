@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Person;
 use App\Repository\PersonRepository;
-
+use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,8 +25,8 @@ class PersonController extends AbstractController
     {
         $date_anniversaire = new \DateTime('10-08-2013');
         $person = new Person();
-        $person->setNom('tata');
-        $person->setPrenom('toto');
+        $person->setNom('regnier');
+        $person->setPrenom('sylvain');
         $person->setVille('Marseille');
         $person->setAge('20');
         $person->setDateAnniversaire($date_anniversaire);
@@ -62,23 +62,51 @@ class PersonController extends AbstractController
         return $this->render('person/show.html.twig', ['person' => $personRepository->find($id)]);
     }
 
-    #[Route('/personne/{id}', name: 'person_edit')]
-    public function edit(int $id, PersonRepository $persoRepo)
-    {
-    $personne = $persoRepo->find($id);
-    //var_dump($personne);
-    return $this->render('person/edit.html.twig', [
-    'personne' => $personne,
-    ]);
-    }
 
     #[Route('/personne/{id}/delete', name: 'person_delete')]
-public function delete(int $id, Person $personne, PersonRepository $persoRepository): Response
+    public function delete(int $id, Person $personne, EntityManagerInterface $entityManager): Response
 {
-$persoRepository->remove($personne, true);
-$persoRepository->flush;
-return $this->redirectToRoute('app_personnes', [], Response::HTTP_SEE_OTHER);
-}
 
-   
+ $entityManager->remove($personne);
+ $entityManager->flush();
+
+ return $this->redirectToRoute('app_all_persons', [], Response::HTTP_SEE_OTHER);
+}
+#[Route('/person/{id}/edit/request',name:'person_edit')]
+public function editRequest(int $id,PersonRepository $personRepository,EntityManagerInterface $entityManager){
+    $person = $personRepository->find($id);
+    $person->setNom($_POST['nom']);
+    $person->setPrenom($_POST['prenom']);
+    $person->setVille($_POST['ville']);
+    $person->setAge($_POST['age']);
+    $person->setDateAnniversaire(new \DateTime($_POST['date_anniversaire']));
+
+    $entityManager->persist($person);
+    $entityManager->flush;
+    return $this->redirectToRoute('app_all_persons',[],Response::HTTP_SEE_OTHER);
+}
+// #[Route('/form', name: 'form_user')]
+// public function forme(): Response
+// {
+// $form = $this->createForm(UserType::class);
+// return $this->render('user/formulaire.html.twig', [
+// 'form' => $form->createView()
+// ]);
+// }
+
+#[Route('/form', name:'form')]
+    public function form(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) 
+                {
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+                }
+        return $this->render('/user/formulaire.html.twig', [
+            'form'=> $form->createView(),
+        ]);
+    }
 }
